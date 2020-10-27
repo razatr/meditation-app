@@ -22,10 +22,10 @@ const app = () => {
 
     sounds.forEach((element) => {
         element.addEventListener('click', function () {
+            console.log(video.childNodes)
             video.src = this.getAttribute('data-video')
             song.src = this.getAttribute('data-sound')
-            console.log(this.getAttribute('data-sound'))
-            checkPlaying(song)
+            stopPlaying()
         })
     })
 
@@ -33,8 +33,16 @@ const app = () => {
         element.addEventListener('click', function () {
             fakeDuration = this.getAttribute('data-time')
             timeDisplay.textContent = getTimeText(fakeDuration)
+            stopPlaying()
         })
     })
+
+    function stopPlaying() {
+        song.currentTime = 0
+        song.pause()
+        video.pause()
+        play.src = './svg/play.svg'
+    }
 
     const checkPlaying = song => {
         if (song.paused) {
@@ -50,15 +58,14 @@ const app = () => {
     }
 
     function getTimeText(seconds) {
-        return `${ Math.floor(seconds / 60) }:${ Math.floor(seconds % 60) < 10 ? Math.floor(seconds % 60) + '0' : Math.floor(seconds % 60)}`
+        return `${ Math.floor(seconds / 60) }:${ Math.floor(seconds % 60) < 10 ? '0' + Math.floor(seconds % 60) : Math.floor(seconds % 60) }`
     }
 
     song.ontimeupdate = () => {
         let currentTime = song.currentTime
         let elapsed = fakeDuration - currentTime
 
-        let progress = outlineLength - (currentTime / fakeDuration) * outlineLength
-        outline.style.strokeDashoffset = progress
+        outline.style.strokeDashoffset = outlineLength - (currentTime / fakeDuration) * outlineLength
 
         timeDisplay.textContent = getTimeText(elapsed)
 

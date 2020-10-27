@@ -11,6 +11,7 @@
 	align-items: center;
 }
 
+
 .time-select,
 .sound-picker,
 .player-container {
@@ -45,9 +46,11 @@ video {
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 100%;
 	z-index: -1;
+	width: 100%;
+	overflow: hidden;
 }
+
 
 .time-select button,
 .sound-picker button {
@@ -62,8 +65,13 @@ video {
 	transition: all 0.5s ease;
 }
 
+.time-select button:focus,
+.sound-picker button:focus {
+	outline: none;
+}
+
 .time-select button:hover {
-	color: black;
+	color: #999999;
 	background: white;
 }
 
@@ -73,16 +81,30 @@ video {
 	width: 120px;
 	border-radius: 50%;
 	padding: 25px;
+	transition: all 0.5s ease;
 }
 
 .sound-picker button:nth-child(1) {
 	background: #4972a1;
 }
 
+.sound-picker button:nth-child(1):hover {
+	background: #314d6e;
+}
+
 .sound-picker button:nth-child(2) {
 	background: #b89300;
 }
 
+.sound-picker button:nth-child(2):hover {
+	background: #856a00;
+}
+
 .sound-picker button img {
 	height: 100%;
+}
+
+.moving-outline circle {
+	transition-property: stroke-dashoffset;
+	transition: 250ms linear;
 }
